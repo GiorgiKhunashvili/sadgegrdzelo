@@ -1,29 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 class Header extends React.Component {
     render() {
         return (
             <div>
-            <div className="ui secondary pointing menu">
-                <Link to="/" className="active item">
+                <div className="ui large menu">
+                <NavLink to="/" exact className="item" activeClassName="active">
                     Home
-                </Link>
-                <Link
-                    to="/sad/create"
-                    className="item"
-                    onClick={(e) => e.target.classList.add('active')}
-                >
-                    Create Sad
-                </Link>
-                <a className="item">
-                    Friends
-                </a>
+                </NavLink>
+                <NavLink to="/sad/create" exact className="item" activeClassName="active">
+                    Messages
+                </NavLink>
                 <div className="right menu">
-                    <a className="ui item">
-                    Logout
-                    </a>
+
+                    <div className="item">
+                        <div className="ui primary button">Sign Up</div>
+                    </div>
                 </div>
                 </div>
             </div>

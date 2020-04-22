@@ -1,17 +1,24 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+
+import { login } from '../../actions';
 
 
 class Login extends React.Component {
 
 
-    renderInput = ({ label, type, holder }) => {
+    renderInput = ({ input, label, type, holder }) => {
         return(
         <div className="field">
             <label>{ label }</label>
-            <input type={ type } placeholder={ holder } />
+            <input {...input} type={ type } placeholder={ holder } />
         </div>
         )
+    }
+
+    onSubmit = () => {
+        this.props.login();
     }
 
     render() {
@@ -33,13 +40,14 @@ class Login extends React.Component {
                         holder="Enter Password"
                     />
                     <button className="ui button" type="submit">Submit</button>
-                    </form>
+                </form>
             </div>
         )
     }
 }
 
 const validate = (formValues) => {
+    console.log(formValues)
     const errors = {};
     if(!formValues.email){
         errors.email = "Please enter Email";
@@ -47,12 +55,13 @@ const validate = (formValues) => {
     if(!formValues.password){
         errors.password = "Please enter Password";
     }
-    if(!"@" in formValues.email){
-        errors.email = "Please enter Email"
-    }
+
+    return errors
 }
 
-export default reduxForm({
+const formWrapper = reduxForm({
     form: "LoginForm",
     validate,
 })(Login);
+
+export default connect(null, { login })(formWrapper);

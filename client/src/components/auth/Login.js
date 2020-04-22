@@ -1,27 +1,37 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 
 
 class Login extends React.Component {
 
 
+    renderInput = ({ label, type, holder }) => {
+        return(
+        <div className="field">
+            <label>{ label }</label>
+            <input type={ type } placeholder={ holder } />
+        </div>
+        )
+    }
+
     render() {
         return (
             <div>
-                <form className="ui form">
-                    <div className="field">
-                        <label>Email</label>
-                        <input type="email" placeholder="Enter Email" />
-                    </div>
-                    <div className="field">
-                        <label>Password</label>
-                        <input type="password" placeholder="Enter Password" />
-                    </div>
-                    <div className="field">
-                        <div className="ui checkbox">
-                        <input type="checkbox" tabindex="0" className="hidden" />
-                        <label>I agree to the Terms and Conditions</label>
-                        </div>
-                    </div>
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
+                    <Field
+                        name="email"
+                        component={this.renderInput}
+                        label="Email"
+                        type="email"
+                        holder="Enter Email"
+                    />
+                    <Field
+                        name="password"
+                        component={this.renderInput}
+                        label="Password"
+                        type="password"
+                        holder="Enter Password"
+                    />
                     <button className="ui button" type="submit">Submit</button>
                     </form>
             </div>
@@ -29,4 +39,20 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+const validate = (formValues) => {
+    const errors = {};
+    if(!formValues.email){
+        errors.email = "Please enter Email";
+    }
+    if(!formValues.password){
+        errors.password = "Please enter Password";
+    }
+    if(!"@" in formValues.email){
+        errors.email = "Please enter Email"
+    }
+}
+
+export default reduxForm({
+    form: "LoginForm",
+    validate,
+})(Login);

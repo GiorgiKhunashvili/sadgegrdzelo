@@ -16,7 +16,7 @@ class Header extends React.Component {
                 <div className="right menu">
 
                     <div className="item">
-                        <div className="ui primary button">Sign Up</div>
+                        <NavLink to="/login" exact className="ui primary button">Sign Up</NavLink>
                     </div>
                 </div>
                 </div>

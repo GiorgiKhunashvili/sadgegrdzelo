@@ -17,8 +17,8 @@ class Login extends React.Component {
         )
     }
 
-    onSubmit = () => {
-        this.props.login();
+    onSubmit = (formValues) => {
+        this.props.login(formValues);
     }
 
     render() {

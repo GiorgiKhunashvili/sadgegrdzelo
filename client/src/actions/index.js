@@ -14,10 +14,7 @@ export const login = (formValues) => {
                 payload: isSignIn
             })
     } catch {
-        dispatch({
-            type: LOGIN,
-            payload: isSignIn
-        })
+
     }
     }
 }

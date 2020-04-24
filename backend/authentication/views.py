@@ -12,12 +12,13 @@ class UserAccountCreate(APIView):
 
     def post(self, request, format="json"):
         serializer = UserAccountCreateSerailizer(data=request.data)
+
         if serializer.is_valid():
-            user = serializer.save()
-            if user:
-                json = serializer.data
-                return Response(json, status=status.HTTP_201_CREATED)
+            account = serializer.save()
+
+        else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "user created"}, status=status.HTTP_201_CREATED)
 
 
 class HelloWorldView(APIView):

@@ -16,7 +16,10 @@ class Header extends React.Component {
                 <div className="right menu">
 
                     <div className="item">
-                        <NavLink to="/login" exact className="ui primary button">Sign Up</NavLink>
+                        <NavLink to="/signup" exact className="ui primary button">Sign Up</NavLink>
+                    </div>
+                    <div className="item">
+                        <NavLink to="/login" exact className="ui primary button">Sign In</NavLink>
                     </div>
                 </div>
                 </div>

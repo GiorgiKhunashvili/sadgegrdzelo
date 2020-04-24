@@ -7,6 +7,7 @@ import EditSad from './sadgegrdzelo/EditSad';
 import DeleteSad from './sadgegrdzelo/DeleteSad';
 
 import Login from './auth/Login';
+import Signup from './auth/SignUp';
 
 import Header from './Header';
 import history from '../history'
@@ -24,6 +25,7 @@ class App extends React.Component {
                         <Route path="/sad/edit" exact component={EditSad} />
                         <Route path="/sad/delete" exact component={DeleteSad} />
                         <Route path="/login" exact component={Login} />
+                        <Route path="/signup" exact component={Signup} />
                     </div>
                 </Router>
 

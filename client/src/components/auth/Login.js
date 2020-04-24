@@ -7,13 +7,26 @@ import { login } from '../../actions';
 
 class Login extends React.Component {
 
+    renderError({error, touched}) {
+        if(error && touched){
+            return (
+                <div className="ui error message">
+                    <div className="header">
+                        { error }
+                    </div>
+                </div>
+            )
+        }
+    }
 
-    renderInput = ({ input, label, type, holder }) => {
+    renderInput = ({ input, label, type, holder, meta }) => {
+        const className = `field ${meta.error && meta.touched ? 'error': ''}`
         return(
-        <div className="field">
-            <label>{ label }</label>
-            <input {...input} type={ type } placeholder={ holder } />
-        </div>
+            <div className={className}>
+                <label>{ label }</label>
+                <input {...input} type={ type } placeholder={ holder } />
+                {this.renderError(meta)}
+            </div>
         )
     }
 
@@ -24,7 +37,7 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
                     <Field
                         name="email"
                         component={this.renderInput}
@@ -47,7 +60,6 @@ class Login extends React.Component {
 }
 
 const validate = (formValues) => {
-    console.log(formValues)
     const errors = {};
     if(!formValues.email){
         errors.email = "Please enter Email";

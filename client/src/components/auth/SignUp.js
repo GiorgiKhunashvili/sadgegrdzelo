@@ -17,7 +17,9 @@ class Signup extends React.Component {
         }
 
     }
-
+    componentDidMount() {
+        console.log(this.props.auth);
+    }
     renderInput = ({ input, label, type, holder, meta}) => {
         const className = `field ${meta.error && meta.touched ? 'error': ''}`
         return (
@@ -71,8 +73,9 @@ class Signup extends React.Component {
     }
 }
 
-const validate = (formValues) => {
+const validate = (formValues, props) => {
     const errors = {};
+
     if(!formValues.email) {
         errors.email = "Please enter email";
     }
@@ -92,6 +95,9 @@ const validate = (formValues) => {
     if(formValues.password !== formValues.confirmPassword) {
         errors.confirmPassword = "password does not match";
     }
+    if(props.auth.emailError){
+        errors.email = props.auth.emailError;
+    }
     return errors;
 }
 
@@ -100,4 +106,10 @@ const formWrapper = reduxForm({
     validate
 })(Signup);
 
-export default connect(null, { signup })(formWrapper);
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps, { signup })(formWrapper);

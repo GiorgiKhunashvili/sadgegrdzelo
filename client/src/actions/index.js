@@ -34,7 +34,11 @@ export const signup = (formValues) => {
                 payload: response.data
             })
         } catch(err) {
-            console.log(err.response)
+            dispatch({
+                type: SIGN_UP,
+                payload: err.response
+            })
+
         }
     }
 }

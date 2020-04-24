@@ -15,7 +15,6 @@ class UserAccountCreate(APIView):
 
         if serializer.is_valid():
             account = serializer.save()
-
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "user created"}, status=status.HTTP_201_CREATED)

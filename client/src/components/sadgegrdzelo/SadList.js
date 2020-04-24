@@ -7,7 +7,7 @@ class SadList extends React.Component {
             <div className="ui large feed">
                 <div className="event">
                     <div className="label">
-                    <img src="/images/avatar/small/helen.jpg" />
+                    <img src="/images/avatar/small/helen.jpg" alt="avatar" />
                     </div>
                     <div className="content">
                     <div className="date">

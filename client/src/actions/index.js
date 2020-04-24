@@ -1,5 +1,5 @@
 import { LOGIN } from './types';
-import { axiosInstance } from '../axiosApi/api';
+import axiosInstance from '../axiosApi/api';
 export const login = (formValues) => {
     return async (dispatch) => {
         let isSignIn = false;

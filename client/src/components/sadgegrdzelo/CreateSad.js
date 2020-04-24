@@ -17,8 +17,8 @@ class CreateSad extends React.Component {
                         <a>Helen Troy</a> added <a>2 new illustrations</a>
                     </div>
                     <div class="extra images">
-                        <a><img src="/images/wireframe/image.png" /></a>
-                        <a><img src="/images/wireframe/image.png" /></a>
+                        <a><img src="/images/wireframe/image.png" alt="araferi"/></a>
+                        <a><img src="/images/wireframe/image.png" alt="araferi"/></a>
                     </div>
                     <div class="meta">
                         <a class="like">

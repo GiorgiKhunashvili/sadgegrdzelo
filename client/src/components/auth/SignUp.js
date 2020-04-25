@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 import { signup } from '../../actions/index';
 
@@ -37,6 +37,7 @@ class Signup extends React.Component {
     render() {
         return (
             <div>
+                
                 <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
                     <Field 
                         name="email"
@@ -95,9 +96,7 @@ const validate = (formValues, props) => {
     if(formValues.password !== formValues.confirmPassword) {
         errors.confirmPassword = "password does not match";
     }
-    if(props.auth.emailError){
-        errors.email = props.auth.emailError;
-    }
+
     return errors;
 }
 

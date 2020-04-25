@@ -15,6 +15,7 @@ export default (state = INITAL_STATE, action) => {
             return state;
         case SIGN_UP:
             if (action.payload.status === 400){
+                console.log("alooo")
                 return {...state, emailError: action.payload.data.email[0]}
             }
         default:

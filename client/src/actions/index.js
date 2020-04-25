@@ -1,5 +1,6 @@
 import { LOGIN, SIGN_UP } from './types';
 import axiosInstance from '../axiosApi/api';
+import { SubmissionError } from 'redux-form';
 
 export const login = (formValues) => {
     return async (dispatch) => {
@@ -34,10 +35,11 @@ export const signup = (formValues) => {
                 payload: response.data
             })
         } catch(err) {
-            dispatch({
-                type: SIGN_UP,
-                payload: err.response
-            })
+            if (err.response.status === 400){
+                throw new SubmissionError({
+                    email: err.response.data.email
+                })
+            }
 
         }
     }

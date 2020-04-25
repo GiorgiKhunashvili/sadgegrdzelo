@@ -20,27 +20,3 @@ export const login = (formValues) => {
     }
     }
 }
-
-export const signup = (formValues) => {
-    return async (dispatch) => {
-        try {
-            const response = await axiosInstance.post('/user/create/', {
-                email: formValues.email,
-                username: formValues.username,
-                password: formValues.password,
-            })
-
-            dispatch({
-                type: SIGN_UP,
-                payload: response.data
-            })
-        } catch(err) {
-            if (err.response.status === 400){
-                throw new SubmissionError({
-                    email: err.response.data.email
-                })
-            }
-
-        }
-    }
-}

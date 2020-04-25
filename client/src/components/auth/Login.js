@@ -7,6 +7,19 @@ import { login } from '../../actions';
 
 class Login extends React.Component {
 
+
+    renderSignUpMessage(){
+        if (this.props.location.state.message !== null){
+            return (
+                <div className="ui positive message">
+                    <i className="close icon"></i>
+                    <div className="header">
+                        {this.props.location.state.message}
+                    </div>
+                </div>
+            )
+        }
+    }
     renderError({error, touched}) {
         if(error && touched){
             return (
@@ -37,6 +50,7 @@ class Login extends React.Component {
     render() {
         return (
             <div>
+                {this.renderSignUpMessage()}
                 <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
                     <Field
                         name="email"

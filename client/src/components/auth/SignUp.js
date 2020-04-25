@@ -1,7 +1,8 @@
 import React from 'react';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
-import { signup } from '../../actions/index';
+import history from '../../history';
+import axiosInstance from '../../axiosApi/api';
 
 class Signup extends React.Component {
 
@@ -27,12 +28,33 @@ class Signup extends React.Component {
                 <label>{ label }</label>
                 <input {...input} type={ type } placeholder={ holder } />
                 {this.renderError(meta)}
+
             </div>
         )
     }
 
-    onSubmit = (formValues) => {
-        this.props.signup(formValues);
+    onSubmit = async (formValues) => {
+        return await axiosInstance.post('/user/create/', {
+            email: formValues.email,
+            username: formValues.username,
+            password: formValues.password,
+        }).then((res) => {
+            history.push({pathname: '/login', state: { message: "you registered succesfuly" } })
+        }).catch(error => {
+            console.log(error.response.data.username)
+            if ( error.response.data.email){
+                throw new SubmissionError({
+                    email: error.response.data.email,
+                    _error: "Sign Up Failed"
+                })
+            }
+            if( error.response.data.username ) {
+                throw new SubmissionError({
+                    username: error.response.data.username[0],
+                    _error: "Sign Up Faield"
+                })
+            }
+        })
     }
     render() {
         return (
@@ -111,4 +133,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { signup })(formWrapper);
+export default connect(mapStateToProps)(formWrapper);

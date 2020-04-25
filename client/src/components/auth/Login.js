@@ -3,20 +3,21 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { login } from '../../actions';
-
+import FlashMessage from 'react-flash-message';
 
 class Login extends React.Component {
-
 
     renderSignUpMessage(){
         if (this.props.location.state.message !== null){
             return (
-                <div className="ui positive message">
-                    <i className="close icon"></i>
-                    <div className="header">
-                        {this.props.location.state.message}
+                <FlashMessage duration={5000} >
+                    <div className="ui positive message">
+                        <i className="close icon"></i>
+                        <div className="header">
+                            {this.props.location.state.message}
+                        </div>
                     </div>
-                </div>
+                </FlashMessage>
             )
         }
     }

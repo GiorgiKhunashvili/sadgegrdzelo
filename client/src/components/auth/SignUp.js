@@ -42,7 +42,7 @@ class Signup extends React.Component {
             history.push({pathname: '/login', state: { message: "you registered succesfuly" } })
         }).catch(error => {
             console.log(error.response.data.username)
-            if ( error.response.data.email){
+            if ( error.response.data.email ){
                 throw new SubmissionError({
                     email: error.response.data.email,
                     _error: "Sign Up Failed"

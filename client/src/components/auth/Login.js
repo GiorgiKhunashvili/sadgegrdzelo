@@ -7,20 +7,20 @@ import FlashMessage from 'react-flash-message';
 
 class Login extends React.Component {
 
-    renderSignUpMessage(){
-        if (this.props.location.state.message !== null){
-            return (
-                <FlashMessage duration={5000} >
-                    <div className="ui positive message">
-                        <i className="close icon"></i>
-                        <div className="header">
-                            {this.props.location.state.message}
-                        </div>
-                    </div>
-                </FlashMessage>
-            )
-        }
-    }
+    // renderSignUpMessage = () => {
+    //     if (this.props.location.state.message !== null){
+    //         return (
+    //             <FlashMessage duration={5000} >
+    //                 <div className="ui positive message">
+    //                     <i className="close icon"></i>
+    //                     <div className="header">
+    //                         {this.props.location.state.message}
+    //                     </div>
+    //                 </div>
+    //             </FlashMessage>
+    //         )
+    //     }
+    // }
     renderError({error, touched}) {
         if(error && touched){
             return (
@@ -51,7 +51,7 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                {this.renderSignUpMessage()}
+                {/* {this.renderSignUpMessage()} */}
                 <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
                     <Field
                         name="email"

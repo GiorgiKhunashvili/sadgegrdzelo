@@ -23,7 +23,7 @@ class UserAccountCreate(APIView):
 
 
 class LogoutAndBlacklistRefreshTokenForUserView(APIView):
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
     authentication_classes = ()
 
     def post(self, request):
@@ -33,6 +33,7 @@ class LogoutAndBlacklistRefreshTokenForUserView(APIView):
             token.blacklist()
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
+            print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class HelloWorldView(APIView):

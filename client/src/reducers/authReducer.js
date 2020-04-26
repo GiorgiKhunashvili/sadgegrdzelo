@@ -12,7 +12,7 @@ export default (state = INITAL_STATE, action) => {
             }
             return state;
         case LOG_OUT:
-            return { isSignIn: false }
+            return { ...state, isSignIn: false }
         case SUCCESS_SIGN_UP:
             return {...state, successSignUpMessage: "you were registered successfuly"}
         default:

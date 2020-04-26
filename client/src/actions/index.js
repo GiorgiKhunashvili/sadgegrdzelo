@@ -1,6 +1,7 @@
 import { LOGIN, LOG_OUT, SUCCESS_SIGN_UP } from './types';
 import axiosInstance from '../axiosApi/api';
 import { SubmissionError } from 'redux-form';
+import history from '../history';
 
 export const login = (formValues) => {
     return async (dispatch) => {
@@ -30,10 +31,13 @@ export const logout = () => {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             axiosInstance.defaults.headers['Authorization'] = null;
+            console.log(response)
             dispatch({
                 type: LOG_OUT
             })
 
+            history.push('/')
+            return response
         }catch(e) {
             console.log(e)
         }

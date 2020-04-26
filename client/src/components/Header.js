@@ -6,12 +6,13 @@ import { logout } from '../actions/index';
 
 class Header extends React.Component {
 
+
     renderAuthLink() {
         if (this.props.isSignIn){
             return (
                 <div className="right menu">
                     <div className="item">
-                        <NavLink to="/" exact onClick={this.props.logout()} className="ui primary button">Log out</NavLink>
+                        <NavLink to="/" exact onClick={this.props.logout} className="ui primary button">Log out</NavLink>
                     </div>
                 </div>
             )

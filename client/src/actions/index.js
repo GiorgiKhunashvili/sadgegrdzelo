@@ -1,4 +1,4 @@
-import { LOGIN, SIGN_UP, LOG_OUT } from './types';
+import { LOGIN, LOG_OUT, SUCCESS_SIGN_UP } from './types';
 import axiosInstance from '../axiosApi/api';
 import { SubmissionError } from 'redux-form';
 
@@ -37,5 +37,12 @@ export const logout = () => {
         }catch(e) {
             console.log(e)
         }
+    }
+}
+
+
+export const succesSingUp = () => {
+    return {
+        type: SUCCESS_SIGN_UP
     }
 }

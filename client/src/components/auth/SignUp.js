@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 import history from '../../history';
+import { succesSingUp } from '../../actions';
 import axiosInstance from '../../axiosApi/api';
 
 class Signup extends React.Component {
@@ -39,7 +40,8 @@ class Signup extends React.Component {
             username: formValues.username,
             password: formValues.password,
         }).then((res) => {
-            history.push({pathname: '/login', state: { message: "you registered succesfuly" } })
+            this.props.succesSingUp();
+            history.push({pathname: '/login' })
         }).catch(error => {
             console.log(error.response.data.username)
             if ( error.response.data.email ){
@@ -133,4 +135,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(formWrapper);
+export default connect(mapStateToProps, { succesSingUp })(formWrapper);

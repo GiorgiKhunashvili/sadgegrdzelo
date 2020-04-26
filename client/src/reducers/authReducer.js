@@ -1,7 +1,8 @@
-import { LOGIN, SIGN_UP, LOG_OUT } from '../actions/types';
+import { LOGIN, SIGN_UP, LOG_OUT, SUCCESS_SIGN_UP } from '../actions/types';
 
 const INITAL_STATE = {
     isSignIn: null,
+    successSignUpMessage: null
 }
 export default (state = INITAL_STATE, action) => {
     switch(action.type) {
@@ -12,6 +13,8 @@ export default (state = INITAL_STATE, action) => {
             return state;
         case LOG_OUT:
             return { isSignIn: false }
+        case SUCCESS_SIGN_UP:
+            return {...state, successSignUpMessage: "you were registered successfuly"}
         default:
             return state;
     }

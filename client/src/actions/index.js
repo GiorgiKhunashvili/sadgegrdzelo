@@ -16,6 +16,7 @@ export const login = (formValues) => {
                 type: LOGIN,
                 payload: isSignIn
             })
+            history.push('/')
     } catch {
 
     }

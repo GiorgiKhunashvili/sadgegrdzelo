@@ -8,7 +8,7 @@ class Header extends React.Component {
 
 
     renderAuthLink() {
-        if (this.props.isSignIn){
+        if (localStorage.getItem('access_token')){
             return (
                 <div className="right menu">
                     <div className="item">

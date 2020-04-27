@@ -38,7 +38,7 @@ class Header extends React.Component {
                     Home
                 </NavLink>
                 <NavLink to="/sad/create" exact className="item" activeClassName="active">
-                    Messages
+                    Create
                 </NavLink>
                 {this.renderAuthLink()}
                 </div>

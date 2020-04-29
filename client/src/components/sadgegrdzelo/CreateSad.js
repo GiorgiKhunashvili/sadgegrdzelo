@@ -2,9 +2,15 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { changeRecordButton } from '../../actions/index';
+import { changeRecordButton, CountRecordingTime } from '../../actions/index';
 
 class CreateSad extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            sad: props.sad
+        }
+    }
     renderInput = ({label, input, type, holder}) => {
         let formInput = <input {...input} placeholder={holder} />
         if(type === "textare"){
@@ -28,8 +34,9 @@ class CreateSad extends React.Component {
                 <div>
                       <button onClick={(e) => this.onAudioButtonClick(e, false) } className="ui button">
                         <i className="pause icon"></i>
-                        Pause
+                        Pause 
                     </button>
+
                 </div>
             )
         }else {
@@ -45,8 +52,19 @@ class CreateSad extends React.Component {
         }
  
     }
+    
+    componentWillReceiveProps({ sad }) {
+        this.setState({ sad })
+    }
 
-    onSubmit(){
+    componentDidMount() {
+        console.log('Aloo')
+        if(this.props.recording){
+            this.RecordTimer = setInterval(() => {
+                let time = this.state.recordedTime + 1
+                this.CountRecordingTime(time);
+            }, 1000)
+        }
 
     }
     render() {
@@ -68,6 +86,7 @@ class CreateSad extends React.Component {
                         type="textarea"
                     />
                     { this.renderAudioRecorder() }
+                    { this.props.sad.recordedTime}
                 </form>
                 
             </div>
@@ -86,4 +105,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { changeRecordButton })(formWrapper);
+export default connect(mapStateToProps, { changeRecordButton, CountRecordingTime })(formWrapper);

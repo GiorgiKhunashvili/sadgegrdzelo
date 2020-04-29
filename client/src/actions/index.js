@@ -1,7 +1,8 @@
 import { LOGIN,
         LOG_OUT,
         SUCCESS_SIGN_UP,
-        CHANGE_RECORD_BUTTON
+        CHANGE_RECORD_BUTTON,
+        COUNT_RECORDING_TIME
      } from './types';
 import axiosInstance from '../axiosApi/api';
 import { SubmissionError } from 'redux-form';
@@ -61,6 +62,15 @@ export const changeRecordButton = (recording) => {
         type: CHANGE_RECORD_BUTTON,
         payload: {
             recording: recording
+        }
+    }
+}
+
+export const CountRecordingTime = (time) => {
+    return {
+        type: COUNT_RECORDING_TIME,
+        payload: {
+            time: time
         }
     }
 }

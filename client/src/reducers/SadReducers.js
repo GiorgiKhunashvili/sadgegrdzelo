@@ -1,4 +1,4 @@
-import { CHANGE_RECORD_BUTTON } from '../actions/types';
+import { CHANGE_RECORD_BUTTON, COUNT_RECORDING_TIME } from '../actions/types';
 
 const INITAL_STATE = {
     recording: false,
@@ -13,6 +13,8 @@ export default (state = INITAL_STATE, action) => {
             }else {
                 return {...state, recording: false}
             }
+        case COUNT_RECORDING_TIME:
+            return {...state, recordedTime: action.payload.time}
         default:
             return state;
     }

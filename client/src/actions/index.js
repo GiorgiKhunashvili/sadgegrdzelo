@@ -1,4 +1,8 @@
-import { LOGIN, LOG_OUT, SUCCESS_SIGN_UP } from './types';
+import { LOGIN,
+        LOG_OUT,
+        SUCCESS_SIGN_UP,
+        CHANGE_RECORD_BUTTON
+     } from './types';
 import axiosInstance from '../axiosApi/api';
 import { SubmissionError } from 'redux-form';
 import history from '../history';
@@ -49,5 +53,14 @@ export const logout = () => {
 export const succesSingUp = () => {
     return {
         type: SUCCESS_SIGN_UP
+    }
+}
+
+export const changeRecordButton = (recording) => {
+    return {
+        type: CHANGE_RECORD_BUTTON,
+        payload: {
+            recording: recording
+        }
     }
 }

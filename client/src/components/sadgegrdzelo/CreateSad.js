@@ -1,5 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+
+import { changeRecordButton } from '../../actions/index';
 
 class CreateSad extends React.Component {
     renderInput = ({label, input, type, holder}) => {
@@ -14,14 +17,37 @@ class CreateSad extends React.Component {
             </div>
         )
     }
-
+    onAudioButtonClick = (e, recording) => {
+        e.preventDefault();
+        this.props.changeRecordButton(recording);
+    }
     renderAudioRecorder = () => {
-        return (
-            <div>
-                
-            </div>
+        console.log(this.props.sad.recording)
+        if (this.props.sad.recording === true){
+            return (
+                <div>
+                      <button onClick={(e) => this.onAudioButtonClick(e, false) } className="ui button">
+                        <i className="pause icon"></i>
+                        Pause
+                    </button>
+                </div>
+            )
+        }else {
+            return (
+                <div>
+                    <button onClick={(e) => this.onAudioButtonClick(e, true)} className="ui button">
+                        <i className="play icon"></i>
+                        Start Recording
+                    </button>
+                </div>
+    
+            )
+        }
+ 
+    }
 
-        )
+    onSubmit(){
+
     }
     render() {
         return (
@@ -41,7 +67,9 @@ class CreateSad extends React.Component {
                         holder="Enter Description"
                         type="textarea"
                     />
+                    { this.renderAudioRecorder() }
                 </form>
+                
             </div>
         )
     }
@@ -52,4 +80,10 @@ const formWrapper = reduxForm({
 }
 )(CreateSad);
 
-export default formWrapper;
+const mapStateToProps = (state) => {
+    return {
+        sad: state.sad
+    }
+}
+
+export default connect(mapStateToProps, { changeRecordButton })(formWrapper);

@@ -1,15 +1,21 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import MicRecorder from 'mic-recorder-to-mp3';
 
 import { changeRecordButton, CountRecordingTime } from '../../actions/index';
+
+const Mp3Recorder = new MicRecorder({ bitRate: 128 })
+
 
 class CreateSad extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             recording: false,
-            recordedTime: 0
+            recordedTime: 0,
+            isBlocked: true,
+            blobURL: ""
         }
     } 
 
@@ -26,16 +32,46 @@ class CreateSad extends React.Component {
             </div>
         )
     }
+    start = () => {
+        if (this.state.isBlocked){
+            console.log("Permission Denied");
+        }else {
+            Mp3Recorder.start().then(() => {
+                console.log("started recording")
+            }).catch((e) => console.error(e))
+        }
+    }
+
+    stop = () => {
+        Mp3Recorder.stop().getMp3().then(([buffer, blob]) => {
+            console.log(buffer);
+            console.log(blob)
+            // const file = new File(buffer, 'me-at-thevoice.mp3', {
+            //     type: blob.type,
+            //     lastModified: Date.now()
+            //   });
+            // formData.append("record", file);
+            // axios.post('http://localhost:8000', formData, {
+            //     headers: {
+            //       'Content-Type': 'multipart/form-data'
+            //     }
+            // })
+            const blobURL = URL.createObjectURL(blob);
+            this.setState({ blobURL, isRecording: false })
+        }).catch((e) => console.log(e));
+    }
     onAudioButtonClick = (e, recording) => {
         e.preventDefault();
         if (recording){
             this.setState({ recording: true })
+            this.start()
             this.timer = setInterval(() => {
                 this.setState({recordedTime: this.state.recordedTime + 1})
             }, 1000)
         }else {
             this.setState({ recording: false })
             clearInterval(this.timer)
+            this.stop();
         }
     }
     renderAudioRecorder = () => {
@@ -64,10 +100,29 @@ class CreateSad extends React.Component {
  
     }
 
+    componentDidMount(){
+        navigator.getUserMedia({audio: true},
+            () => {
+                console.log("Permision Granted");
+                this.setState({ isBlocked: false })
+            },
+            () => {
+                console.log("Permision denide")
+                this.setState({ isBlocked: true })
+            }
+            )
+    }
 
+    renderRecorededAudio(){
+        if (this.state.blobURL) {
+            return (
+                <div>
+                    <audio src={this.state.blobURL} controls="controls" />
+                </div>
+            )
+        }
+    }
     render() {
-
-
         return (
             <div>
                 <form className="ui form error">
@@ -88,6 +143,7 @@ class CreateSad extends React.Component {
                     { this.renderAudioRecorder() }
                     { this.state.recordedTime }
                 </form>
+                { this.renderRecorededAudio() }
                 
             </div>
         )

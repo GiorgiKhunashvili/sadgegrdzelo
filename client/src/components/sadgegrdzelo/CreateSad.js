@@ -6,11 +6,14 @@ import { changeRecordButton, CountRecordingTime } from '../../actions/index';
 
 class CreateSad extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            sad: props.sad
+            recording: false,
+            recordedTime: 0
         }
-    }
+    } 
+
+
     renderInput = ({label, input, type, holder}) => {
         let formInput = <input {...input} placeholder={holder} />
         if(type === "textare"){
@@ -25,11 +28,19 @@ class CreateSad extends React.Component {
     }
     onAudioButtonClick = (e, recording) => {
         e.preventDefault();
-        this.props.changeRecordButton(recording);
+        if (recording){
+            this.setState({ recording: true })
+            this.timer = setInterval(() => {
+                this.setState({recordedTime: this.state.recordedTime + 1})
+            }, 1000)
+        }else {
+            this.setState({ recording: false })
+            clearInterval(this.timer)
+        }
     }
     renderAudioRecorder = () => {
-        console.log(this.props.sad.recording)
-        if (this.props.sad.recording === true){
+        console.log(this.state.recording)
+        if (this.state.recording === true){
             return (
                 <div>
                       <button onClick={(e) => this.onAudioButtonClick(e, false) } className="ui button">
@@ -52,22 +63,11 @@ class CreateSad extends React.Component {
         }
  
     }
-    
-    componentWillReceiveProps({ sad }) {
-        this.setState({ sad })
-    }
 
-    componentDidMount() {
-        console.log('Aloo')
-        if(this.props.recording){
-            this.RecordTimer = setInterval(() => {
-                let time = this.state.recordedTime + 1
-                this.CountRecordingTime(time);
-            }, 1000)
-        }
 
-    }
     render() {
+
+
         return (
             <div>
                 <form className="ui form error">
@@ -86,12 +86,13 @@ class CreateSad extends React.Component {
                         type="textarea"
                     />
                     { this.renderAudioRecorder() }
-                    { this.props.sad.recordedTime}
+                    { this.state.recordedTime }
                 </form>
                 
             </div>
         )
     }
+
 }
 
 const formWrapper = reduxForm({

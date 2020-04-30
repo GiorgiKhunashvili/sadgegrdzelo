@@ -1,4 +1,4 @@
-import { LOGIN, SIGN_UP, LOG_OUT, SUCCESS_SIGN_UP } from '../actions/types';
+import { LOGIN, LOG_OUT, SUCCESS_SIGN_UP } from '../actions/types';
 
 const INITAL_STATE = {
     isSignIn: null,

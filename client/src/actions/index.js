@@ -5,7 +5,6 @@ import { LOGIN,
         COUNT_RECORDING_TIME
      } from './types';
 import axiosInstance from '../axiosApi/api';
-import { SubmissionError } from 'redux-form';
 import history from '../history';
 
 export const login = (formValues) => {

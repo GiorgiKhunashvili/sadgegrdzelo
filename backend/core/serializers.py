@@ -20,4 +20,3 @@ class SadgegrdzeloSerializer(serializers.ModelSerializer):
         except UserAccount.DoesNotExist as e:
             raise serializers.ValidationError(e)
 
-

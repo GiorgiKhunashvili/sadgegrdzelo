@@ -2,12 +2,17 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 
 from .serializers import UserAccountCreateSerailizer
+from .serializers import AuthTokenObtainPairSerializer
 
 # Create your views here.
 
+class ObtainTokenPairWithId(TokenObtainPairView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = AuthTokenObtainPairSerializer
 
 class UserAccountCreate(APIView):
     permission_classes = (permissions.AllowAny, )

@@ -16,7 +16,6 @@ export const login = (formValues) => {
 
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
-
             isSignIn = true;
             dispatch({
                 type: LOGIN,

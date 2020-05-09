@@ -2,10 +2,12 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import MicRecorder from 'mic-recorder-to-mp3';
+import axios from 'axios';
 
 import { changeRecordButton, CountRecordingTime } from '../../actions/index';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 })
+var formData = new FormData();
 
 
 class CreateSad extends React.Component {
@@ -46,16 +48,21 @@ class CreateSad extends React.Component {
         Mp3Recorder.stop().getMp3().then(([buffer, blob]) => {
             console.log(buffer);
             console.log(blob)
-            // const file = new File(buffer, 'me-at-thevoice.mp3', {
-            //     type: blob.type,
-            //     lastModified: Date.now()
-            //   });
-            // formData.append("record", file);
-            // axios.post('http://localhost:8000', formData, {
-            //     headers: {
-            //       'Content-Type': 'multipart/form-data'
-            //     }
-            // })
+            const file = new File(buffer, 'me-at-thevoice.mp3', {
+                type: blob.type,
+                lastModified: Date.now()
+              });
+            formData.append("audio", file);
+            formData.append("id", 1);
+            formData.append("title", "aloo");
+            formData.append("description", "aloo123")
+
+            axios.post('http://localhost:8000/sad/create/', formData, {
+                headers: {
+                'Authorization': "JWT " + localStorage.getItem('access_token'),
+                'Content-Type': 'multipart/form-data'
+                }
+            }).then().catch((e) => console.log(e.response))
             const blobURL = URL.createObjectURL(blob);
             this.setState({ blobURL, isRecording: false })
         }).catch((e) => console.log(e));
@@ -123,6 +130,7 @@ class CreateSad extends React.Component {
         }
     }
     render() {
+
         return (
             <div>
                 <form className="ui form error">

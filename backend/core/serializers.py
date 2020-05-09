@@ -6,7 +6,7 @@ class SadgegrdzeloSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     class Meta:
         model = Sadgegrdzelo
-        fields = ['title', "description", "audio"]
+        fields = ["id", 'title', "description", "audio"]
 
     def save(self):
         try:
@@ -17,6 +17,7 @@ class SadgegrdzeloSerializer(serializers.ModelSerializer):
                 audio=self.validated_data['audio'],
                 user=author
             )
+            sadgegrdzelo.save()
         except UserAccount.DoesNotExist as e:
             raise serializers.ValidationError(e)
 

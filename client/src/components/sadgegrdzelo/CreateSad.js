@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
 
-import { changeRecordButton, CountRecordingTime } from '../../actions/index';
+import { createSadAction } from '../../actions/index';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 })
 var formData = new FormData();
@@ -17,7 +17,8 @@ class CreateSad extends React.Component {
             recording: false,
             recordedTime: 0,
             isBlocked: true,
-            blobURL: ""
+            blobURL: "",
+            file: null
         }
     } 
 
@@ -46,25 +47,23 @@ class CreateSad extends React.Component {
 
     stop = () => {
         Mp3Recorder.stop().getMp3().then(([buffer, blob]) => {
-            console.log(buffer);
-            console.log(blob)
             const file = new File(buffer, 'me-at-thevoice.mp3', {
                 type: blob.type,
                 lastModified: Date.now()
               });
-            formData.append("audio", file);
-            formData.append("id", 1);
-            formData.append("title", "aloo");
-            formData.append("description", "aloo123")
+            // formData.append("audio", file);
+            // formData.append("id", 1);
+            // formData.append("title", "aloo");
+            // formData.append("description", "aloo123")
 
-            axios.post('http://localhost:8000/sad/create/', formData, {
-                headers: {
-                'Authorization': "JWT " + localStorage.getItem('access_token'),
-                'Content-Type': 'multipart/form-data'
-                }
-            }).then().catch((e) => console.log(e.response))
+            // axios.post('http://localhost:8000/sad/create/', formData, {
+            //     headers: {
+            //     'Authorization': "JWT " + localStorage.getItem('access_token'),
+            //     'Content-Type': 'multipart/form-data'
+            //     }
+            // }).then().catch((e) => console.log(e.response))
             const blobURL = URL.createObjectURL(blob);
-            this.setState({ blobURL, isRecording: false })
+            this.setState({ blobURL, isRecording: false, file })
         }).catch((e) => console.log(e));
     }
     onAudioButtonClick = (e, recording) => {
@@ -129,11 +128,14 @@ class CreateSad extends React.Component {
             )
         }
     }
+    onSubmit = (formValues) => {
+        this.props.createSadAction(this.state.file, formValues);
+    }
     render() {
-
+        console.log(this.props)
         return (
             <div>
-                <form className="ui form error">
+                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
                     <Field
                         name="title"
                         component={this.renderInput}
@@ -150,6 +152,7 @@ class CreateSad extends React.Component {
                     />
                     { this.renderAudioRecorder() }
                     { this.state.recordedTime }
+                    <button type="submit">MIDIIIII</button>
                 </form>
                 { this.renderRecorededAudio() }
                 
@@ -170,4 +173,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { changeRecordButton, CountRecordingTime })(formWrapper);
+export default connect(mapStateToProps, { createSadAction })(formWrapper);

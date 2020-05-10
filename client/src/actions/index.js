@@ -1,11 +1,13 @@
 import { LOGIN,
         LOG_OUT,
         SUCCESS_SIGN_UP,
-        CHANGE_RECORD_BUTTON,
-        COUNT_RECORDING_TIME
+        CREATE_SAD
      } from './types';
 import axiosInstance from '../axiosApi/api';
+import axios from 'axios';
 import history from '../history';
+
+var formData = new FormData();
 
 export const login = (formValues) => {
     return async (dispatch) => {
@@ -57,20 +59,25 @@ export const succesSingUp = () => {
     }
 }
 
-export const changeRecordButton = (recording) => {
-    return {
-        type: CHANGE_RECORD_BUTTON,
-        payload: {
-            recording: recording
-        }
-    }
-}
+export const createSadAction = (audioFile, formValues) => {
+    return async (dispatch) => {
+        try {
+            formData.append('audio', audioFile);
+            formData.append('title', formValues.title);
+            formData.append('description', formValues.description);
+            formData.append('id', 1);
+            const response = await axios.post('http://localhost:8000/sad/create/', formData, {
+                headers: {
+                    'Authorization': "JWT " + localStorage.getItem('access_token'),
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            dispatch({
+                type: CREATE_SAD,
+            })
 
-export const CountRecordingTime = (time) => {
-    return {
-        type: COUNT_RECORDING_TIME,
-        payload: {
-            time: time
+        } catch(e) {
+            console.log(e.response)
         }
     }
 }

@@ -1,4 +1,4 @@
-import { CHANGE_RECORD_BUTTON, COUNT_RECORDING_TIME } from '../actions/types';
+import { CREATE_SAD } from '../actions/types';
 
 const INITAL_STATE = {
     recording: false,
@@ -7,14 +7,8 @@ const INITAL_STATE = {
 
 export default (state = INITAL_STATE, action) => {
     switch(action.type){
-        case CHANGE_RECORD_BUTTON:
-            if (action.payload.recording === true){
-                return {...state, recording: true}
-            }else {
-                return {...state, recording: false}
-            }
-        case COUNT_RECORDING_TIME:
-            return {...state, recordedTime: action.payload.time}
+        case CREATE_SAD:
+            return state;
         default:
             return state;
     }

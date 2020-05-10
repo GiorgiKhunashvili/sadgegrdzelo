@@ -2,12 +2,11 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import MicRecorder from 'mic-recorder-to-mp3';
-import axios from 'axios';
+
 
 import { createSadAction } from '../../actions/index';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 })
-var formData = new FormData();
 
 
 class CreateSad extends React.Component {
@@ -85,7 +84,7 @@ class CreateSad extends React.Component {
         if (this.state.recording === true){
             return (
                 <div>
-                      <button onClick={(e) => this.onAudioButtonClick(e, false) } className="ui button">
+                      <button onClick={(e) => this.onAudioButtonClick(e, false) } className="ui button red">
                         <i className="pause icon"></i>
                         { this.state.recordedTime }
                     </button>

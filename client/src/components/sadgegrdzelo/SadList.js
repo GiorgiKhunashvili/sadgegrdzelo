@@ -14,14 +14,14 @@ class SadList extends React.Component {
                         4 days ago
                     </div>
                     <div className="summary">
-                        <a>Helen Troy</a> added <a>2 new illustrations</a>
+                        <a href="/#">Helen Troy</a> added <a href="/#">2 new illustrations</a>
                     </div>
                     <div className="extra images">
-                        <a><img src="/images/wireframe/image.png" /></a>
-                        <a><img src="/images/wireframe/image.png" /></a>
+                        <a href="/#"><img src="/images/wireframe/image.png" alt="uncu duncu" /></a>
+                        <a href="/#"><img src="/images/wireframe/image.png" alt="uncu duncu" /></a>
                     </div>
                     <div className="meta">
-                        <a className="like">
+                        <a href="/#" className="like">
                         <i className="like icon"></i> 1 Like
                         </a>
                     </div>

@@ -4,7 +4,7 @@ import { LOGIN,
         CREATE_SAD
      } from './types';
 import axiosInstance from '../axiosApi/api';
-import axios from 'axios';
+
 import history from '../history';
 
 var formData = new FormData();
@@ -66,7 +66,7 @@ export const createSadAction = (audioFile, formValues) => {
             formData.append('title', formValues.title);
             formData.append('description', formValues.description);
             formData.append('id', 1);
-            const response = await axiosInstance.post('/sad/create/', formData, {
+            await axiosInstance.post('/sad/create/', formData, {
                 headers: {
                     'Authorization': "JWT " + localStorage.getItem('access_token'),
                     'Content-Type': 'multipart/form-data'

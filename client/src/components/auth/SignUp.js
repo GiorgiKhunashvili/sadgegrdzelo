@@ -35,7 +35,7 @@ class Signup extends React.Component {
     }
 
     onSubmit = async (formValues) => {
-        return await axiosInstance.post('/user/create/', {
+        return await axiosInstance.post('/api/user/create/', {
             email: formValues.email,
             username: formValues.username,
             password: formValues.password,

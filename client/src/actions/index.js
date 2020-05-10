@@ -13,7 +13,7 @@ export const login = (formValues) => {
     return async (dispatch) => {
         let isSignIn = false;
         try {
-            const response = await axiosInstance.post('/token/obtain/', {...formValues});
+            const response = await axiosInstance.post('/api/token/obtain/', {...formValues});
             axiosInstance.defaults.headers['Authorization'] = "JWT" + response.data.access;
 
             localStorage.setItem('access_token', response.data.access);
@@ -33,7 +33,7 @@ export const login = (formValues) => {
 export const logout = () => {
     return async (dispatch) => {
         try {
-            const response = await axiosInstance.post('/blacklist/', {
+            const response = await axiosInstance.post('/api/blacklist/', {
                 "refresh_token": localStorage.getItem('refresh_token')
             });
             localStorage.removeItem('access_token');
@@ -66,7 +66,7 @@ export const createSadAction = (audioFile, formValues) => {
             formData.append('title', formValues.title);
             formData.append('description', formValues.description);
             formData.append('id', 1);
-            const response = await axios.post('http://localhost:8000/sad/create/', formData, {
+            const response = await axiosInstance.post('/sad/create/', formData, {
                 headers: {
                     'Authorization': "JWT " + localStorage.getItem('access_token'),
                     'Content-Type': 'multipart/form-data'

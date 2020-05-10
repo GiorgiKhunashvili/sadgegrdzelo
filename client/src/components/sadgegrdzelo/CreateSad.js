@@ -87,7 +87,7 @@ class CreateSad extends React.Component {
                 <div>
                       <button onClick={(e) => this.onAudioButtonClick(e, false) } className="ui button">
                         <i className="pause icon"></i>
-                        Pause 
+                        { this.state.recordedTime }
                     </button>
 
                 </div>
@@ -151,8 +151,12 @@ class CreateSad extends React.Component {
                         type="textarea"
                     />
                     { this.renderAudioRecorder() }
-                    { this.state.recordedTime }
-                    <button type="submit">MIDIIIII</button>
+
+                    <div className="ui buttons">
+                        <button className="ui button">Cancel</button>
+                        <div className="or"></div>
+                        <button type="submit" className="ui positive button">Save</button>
+                    </div>
                 </form>
                 { this.renderRecorededAudio() }
                 

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'http://localhost:8000',
     timeout: 5000,
     headers: {
         'Authorization': "JWT " + localStorage.getItem('access_token'),
@@ -20,7 +20,7 @@ axiosInstance.interceptors.response.use(
             const refreshToken = localStorage.getItem('refresh_token');
 
             return axiosInstance
-                .post('/token/refresh/', {refresh: refreshToken})
+                .post('/api/token/refresh/', {refresh: refreshToken})
                 .then((response) => {
                     localStorage.setItem('access_token', response.data.access);
                     localStorage.setItem('refresh_token', response.data.refresh);

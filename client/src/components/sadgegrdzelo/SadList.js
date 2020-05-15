@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getSadgegrdzeloData } from '../../actions';
+import '../../style/mainPage.css';
 
 class SadList extends React.Component {
 
@@ -11,31 +12,28 @@ class SadList extends React.Component {
     renderSadList(){
         return this.props.sad.map((sad, index) => {
             return (
-                <div className="sad" key={index}>
-                    <div className="event">
+                <div className="event" key={index}>
                     <div className="label">
-                    <img src="/images/avatar/small/helen.jpg" alt="avatar" />
+                    <img  src={ sad.profile_image_url } />
                     </div>
                     <div className="content">
-                    <div className="date">
-                        4 days ago
-                    </div>
                     <div className="summary">
-                        <a href="/#">{sad.user_name}</a> added <a href="/#">2 new illustrations</a>
+                        <a>{ sad.user_name }</a> added new sadgegrdzelo
+                        <div className="date">
+                        4 days ago
+                        </div>
                     </div>
                     <div className="extra images">
-                        {/* <a href="/#"><img src="/images/wireframe/image.png" alt="uncu duncu" /></a>
-                        <a href="/#"><img src="/images/wireframe/image.png" alt="uncu duncu" /></a> */}
-                        <audio src={sad.audio_url} controls="controls" />
+                        <audio src={ sad.audio_url } controls="controls" />
                     </div>
                     <div className="meta">
-                        <a href="/#" className="like">
+                        <a className="like">
                         <i className="like icon"></i> 1 Like
                         </a>
                     </div>
                     </div>
-                    </div>
                 </div>
+
             )
         })
 
@@ -44,8 +42,9 @@ class SadList extends React.Component {
         console.log(this.props)
         return (
             <div className="ui large feed">
+
                 {this.renderSadList()}
-            </div>
+         </div>
         )
     }
 }

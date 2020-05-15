@@ -23,12 +23,18 @@ class SadgegrdzeloSerializer(serializers.ModelSerializer):
 
 class GetAllSadgegrdzeloSerializer(serializers.ModelSerializer):
     audio_url = serializers.SerializerMethodField("get_full_audio_path")
+    profile_image_url = serializers.SerializerMethodField("get_full_profile_image_path")
     user_name = serializers.CharField(source="user.username", read_only=True)
     class Meta:
         model = Sadgegrdzelo
-        fields = ["id", "title", "description", "audio_url", "user", "user_name"]
+        fields = ["id", "title", "description", "audio_url", "user", "user_name", "profile_image_url"]
 
     def get_full_audio_path(self, sad):
         request = self.context.get('request')
         audio_url = sad.audio.url
         return request.build_absolute_uri(audio_url)
+    
+    def get_full_profile_image_path(self, sad):
+        request = self.context.get('request')
+        profile_image_url = sad.user.profile_image.url
+        return request.build_absolute_uri(profile_image_url)

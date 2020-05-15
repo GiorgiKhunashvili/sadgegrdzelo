@@ -23,7 +23,7 @@ class GetAllSadgegrdzelo(APIView):
     authentication_classes = ()
 
     def get(self, requset):
-        all_sadgegrdzelo = Sadgegrdzelo.objects.all()
+        all_sadgegrdzelo = Sadgegrdzelo.objects.all().order_by("-id")
         serializer = GetAllSadgegrdzeloSerializer(all_sadgegrdzelo, context={"request": requset}, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

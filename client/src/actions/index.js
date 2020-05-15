@@ -1,7 +1,8 @@
 import { LOGIN,
         LOG_OUT,
         SUCCESS_SIGN_UP,
-        CREATE_SAD
+        CREATE_SAD,
+        GET_ALL_SADGEGRDZELO
      } from './types';
 import axiosInstance from '../axiosApi/api';
 
@@ -78,6 +79,22 @@ export const createSadAction = (audioFile, formValues) => {
 
         } catch(e) {
             console.log(e.response)
+        }
+    }
+}
+
+
+export const getSadgegrdzeloData = () => {
+    return async (dispatch) => {
+        try {
+            const response = await axiosInstance.get('/sad/all-sadgegrdzelo/');
+            dispatch({
+                type: GET_ALL_SADGEGRDZELO,
+                payload: response.data
+            })
+        
+        }catch(e) {
+            console.log(e.response);
         }
     }
 }

@@ -14,11 +14,11 @@ class SadList extends React.Component {
             return (
                 <div className="event" key={index}>
                     <div className="label">
-                    <img  src={ sad.profile_image_url } />
+                    <img  src={ sad.profile_image_url } alt="avatar" />
                     </div>
                     <div className="content">
                     <div className="summary">
-                        <a>{ sad.user_name }</a> added new sadgegrdzelo
+                        <a href="#">{ sad.user_name }</a> added new sadgegrdzelo
                         <div className="date">
                         4 days ago
                         </div>
@@ -27,7 +27,7 @@ class SadList extends React.Component {
                         <audio src={ sad.audio_url } controls="controls" />
                     </div>
                     <div className="meta">
-                        <a className="like">
+                        <a href="#" className="like">
                         <i className="like icon"></i> 1 Like
                         </a>
                     </div>
@@ -40,12 +40,27 @@ class SadList extends React.Component {
     }
     render() {
         console.log(this.props)
-        return (
-            <div className="ui large feed">
+        if (this.props.sad.length === 0){
+            console.log("aloo")
+            return (
+                <div className="ui segment">
+                <div className="ui active dimmer">
+                    <div className="ui medium text loader">Loading</div>
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                </div>
+            )
+        }else{
+            return (
+                <div className="ui large feed">
+    
+                    {this.renderSadList()}
+             </div>
+            )
+        }
 
-                {this.renderSadList()}
-         </div>
-        )
     }
 }
 

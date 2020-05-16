@@ -166,11 +166,18 @@ class CreateSad extends React.Component {
 }
 
 const validate = (formValues) => {
-    const error
+    const errors = {};
+    if( !formValues.title ){
+        errors.title = "Please enter title"
+    };
+    if ( !formValues.description ) {
+        errors.description = "Please enter description"
+    }
 }
 
 const formWrapper = reduxForm({
     form: "CreateSad",
+    validate
 }
 )(CreateSad);
 

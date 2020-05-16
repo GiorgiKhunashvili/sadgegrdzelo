@@ -151,7 +151,7 @@ class CreateSad extends React.Component {
                     />
                     { this.renderAudioRecorder() }
 
-                    <div className="ui buttons">
+                    <div className="ui buttons" style={{ marginTop:"20px" }}>
                         <button className="ui button">Cancel</button>
                         <div className="or"></div>
                         <button type="submit" className="ui positive button">Save</button>
@@ -163,6 +163,10 @@ class CreateSad extends React.Component {
         )
     }
 
+}
+
+const validate = (formValues) => {
+    const error
 }
 
 const formWrapper = reduxForm({

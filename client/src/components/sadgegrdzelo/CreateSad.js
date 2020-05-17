@@ -163,6 +163,12 @@ class CreateSad extends React.Component {
                         holder="Enter Description"
                         type="textarea"
                     />
+                    {/* <Field 
+                        name="audioRecorder"
+                        component={this.renderAudioRecorder}
+                        label="Recorder"
+                        holder="Click to start recording"
+                    /> */}
                     { this.renderAudioRecorder() }
 
                     <div className="ui buttons" style={{ marginTop:"20px" }}>

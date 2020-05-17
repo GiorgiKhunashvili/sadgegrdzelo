@@ -21,16 +21,30 @@ class CreateSad extends React.Component {
         }
     } 
 
+    renderError({ error, touched }) {
+        if (error && touched) {
+            return (
+                <div className="ui error message">
+                    <div className="header">
+                        {error}
+                    </div>
+                </div>
+            )
+        }
 
-    renderInput = ({label, input, type, holder}) => {
+    }
+
+    renderInput = ({label, input, type, holder, meta}) => {
+        const className = `field ${meta.error && meta.touched ? 'error': ''}`
         let formInput = <input {...input} placeholder={holder} />
         if(type === "textare"){
             formInput = <textarea />
         }
         return (
-            <div className="field">
+            <div className={className}>
                 <label>{ label }</label>
                 {formInput}
+                {this.renderError(meta)}
             </div>
         )
     }

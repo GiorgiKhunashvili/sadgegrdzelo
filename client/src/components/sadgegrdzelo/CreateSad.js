@@ -173,6 +173,7 @@ const validate = (formValues) => {
     if ( !formValues.description ) {
         errors.description = "Please enter description"
     }
+    return errors;
 }
 
 const formWrapper = reduxForm({

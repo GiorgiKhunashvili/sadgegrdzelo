@@ -76,6 +76,7 @@ export const createSadAction = (audioFile, formValues) => {
             dispatch({
                 type: CREATE_SAD,
             })
+            history.push("/")
 
         } catch(e) {
             console.log(e.response)

@@ -93,14 +93,14 @@ class CreateSad extends React.Component {
             this.stop();
         }
     }
-    renderAudioRecorder = () => {
-        console.log(this.state.recording)
-        if (this.state.recording === true){
+    renderAudioRecorder = ({ label, input, recording, recordedTime, meta }) => {
+
+        if (recording === true){
             return (
                 <div>
                       <button onClick={(e) => this.onAudioButtonClick(e, false) } className="ui button red">
                         <i className="pause icon"></i>
-                        { this.state.recordedTime }
+                        { recordedTime }
                     </button>
 
                 </div>
@@ -145,7 +145,7 @@ class CreateSad extends React.Component {
         this.props.createSadAction(this.state.file, formValues);
     }
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <div>
                 <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
@@ -163,13 +163,16 @@ class CreateSad extends React.Component {
                         holder="Enter Description"
                         type="textarea"
                     />
-                    {/* <Field 
+                    <Field 
                         name="audioRecorder"
                         component={this.renderAudioRecorder}
                         label="Recorder"
                         holder="Click to start recording"
-                    /> */}
-                    { this.renderAudioRecorder() }
+                        recording={this.state.recording}
+                        recordedTime={this.state.recordedTime}
+
+                    />
+                    {/* { this.renderAudioRecorder() } */}
 
                     <div className="ui buttons" style={{ marginTop:"20px" }}>
                         <button className="ui button">Cancel</button>
@@ -185,7 +188,9 @@ class CreateSad extends React.Component {
 
 }
 
-const validate = (formValues) => {
+const validate = (formValues, props) => {
+    console.log(props)
+
     const errors = {};
     if( !formValues.title ){
         errors.title = "Please enter title"
@@ -193,6 +198,7 @@ const validate = (formValues) => {
     if ( !formValues.description ) {
         errors.description = "Please enter description"
     }
+
     return errors;
 }
 

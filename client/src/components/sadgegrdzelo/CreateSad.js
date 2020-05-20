@@ -102,6 +102,7 @@ class CreateSad extends React.Component {
                         <i className="pause icon"></i>
                         { recordedTime }
                     </button>
+                    {this.renderError(meta)}
 
                 </div>
             )
@@ -112,6 +113,7 @@ class CreateSad extends React.Component {
                         <i className="play icon"></i>
                         Start Recording
                     </button>
+                    {this.renderError(meta)}
                 </div>
     
             )
@@ -144,6 +146,7 @@ class CreateSad extends React.Component {
     }
     onSubmit = (formValues) => {
         this.props.createSadAction(this.props.recordAudio.file, formValues);
+        this.props.recordedTimeAction(0);
     }
     render() {
         // console.log(this.props)

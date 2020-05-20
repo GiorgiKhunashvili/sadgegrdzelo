@@ -27,7 +27,7 @@ export default (state = INITAL_STATE, action) => {
         case BLOB_URL:
             return { ...state, blobURL: action.payload }
         case AUDIO_FILE:
-            return { ...state, AUDIO_FILE: action.payload }
+            return { ...state, file: action.payload }
         default:
             return state;
     }

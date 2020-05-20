@@ -1,5 +1,5 @@
 import {
-    RECODING,
+    RECORDING,
     RECOREDED_TIME,
     IS_BLOCKED,
     BLOB_URL,
@@ -18,14 +18,14 @@ const INITAL_STATE = {
 
 export default (state = INITAL_STATE, action) => {
     switch(action.type){
-        case RECODING:
+        case RECORDING:
             return { ...state, recording: action.payload }
         case RECOREDED_TIME:
             return { ...state, recordedTime: action.payload }
         case IS_BLOCKED:
             return { ...state, isBlocked: action.payload }
         case BLOB_URL:
-            return { ...state, BLOB_URL: action.payload }
+            return { ...state, blobURL: action.payload }
         case AUDIO_FILE:
             return { ...state, AUDIO_FILE: action.payload }
         default:

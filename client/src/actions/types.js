@@ -9,7 +9,7 @@ export const GET_ALL_SADGEGRDZELO = "GET_ALL_SADGEGRDZELO";
 
 // above this comment is record audio action types
 
-export const RECODING = "RECORDING";
+export const RECORDING = "RECORDING";
 export const RECOREDED_TIME = "RECOREDED_TIME";
 export const IS_BLOCKED = "IS_BLOCKED";
 export const BLOB_URL = "BLOB_URL";

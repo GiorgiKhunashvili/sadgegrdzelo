@@ -5,21 +5,18 @@ import MicRecorder from 'mic-recorder-to-mp3';
 
 
 import { createSadAction } from '../../actions/index';
+import { recordingActon,
+        recordedTimeAction,
+        isBlockedAction,
+        blobURLAction,
+        audioFileAction
+}
+  from '../../actions/recordAudioActions';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 })
 
 
 class CreateSad extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            recording: false,
-            recordedTime: 0,
-            isBlocked: true,
-            blobURL: "",
-            file: null
-        }
-    } 
 
     renderError({ error, touched }) {
         if (error && touched) {
@@ -49,7 +46,7 @@ class CreateSad extends React.Component {
         )
     }
     start = () => {
-        if (this.state.isBlocked){
+        if (this.props.recordAudio.isBlocked){
             console.log("Permission Denied");
         }else {
             Mp3Recorder.start().then(() => {
@@ -76,19 +73,22 @@ class CreateSad extends React.Component {
             //     }
             // }).then().catch((e) => console.log(e.response))
             const blobURL = URL.createObjectURL(blob);
-            this.setState({ blobURL, isRecording: false, file })
+            this.props.recordingActon(false);
+            this.props.blobURLAction(blobURL);
+            this.props.audioFileAction(file);
+
         }).catch((e) => console.log(e));
     }
     onAudioButtonClick = (e, recording) => {
         e.preventDefault();
         if (recording){
-            this.setState({ recording: true })
+            this.props.recordingActon(recording=true);
             this.start()
             this.timer = setInterval(() => {
-                this.setState({recordedTime: this.state.recordedTime + 1})
+                this.props.recordedTimeAction(this.props.recordAudio.recordedTime + 1);
             }, 1000)
         }else {
-            this.setState({ recording: false })
+            this.props.recordingActon(recording=false);
             clearInterval(this.timer)
             this.stop();
         }
@@ -123,26 +123,27 @@ class CreateSad extends React.Component {
         navigator.getUserMedia({audio: true},
             () => {
                 console.log("Permision Granted");
-                this.setState({ isBlocked: false })
+
+                this.props.isBlockedAction(false)
             },
             () => {
                 console.log("Permision denide")
-                this.setState({ isBlocked: true })
+                this.props.isBlockedAction(true)
             }
             )
     }
 
     renderRecorededAudio(){
-        if (this.state.blobURL) {
+        if (this.props.recordAudio.blobURL) {
             return (
                 <div>
-                    <audio src={this.state.blobURL} controls="controls" />
+                    <audio src={this.props.recordAudio.blobURL} controls="controls" />
                 </div>
             )
         }
     }
     onSubmit = (formValues) => {
-        this.props.createSadAction(this.state.file, formValues);
+        this.props.createSadAction(this.props.recordAudio.file, formValues);
     }
     render() {
         // console.log(this.props)
@@ -168,8 +169,8 @@ class CreateSad extends React.Component {
                         component={this.renderAudioRecorder}
                         label="Recorder"
                         holder="Click to start recording"
-                        recording={this.state.recording}
-                        recordedTime={this.state.recordedTime}
+                        recording={this.props.recordAudio.recording}
+                        recordedTime={this.props.recordAudio.recordedTime}
 
                     />
                     {/* { this.renderAudioRecorder() } */}
@@ -210,8 +211,15 @@ const formWrapper = reduxForm({
 
 const mapStateToProps = (state) => {
     return {
-        sad: state.sad
+        sad: state.sad,
+        recordAudio: state.recordAudio
     }
 }
 
-export default connect(mapStateToProps, { createSadAction })(formWrapper);
+export default connect(mapStateToProps, {
+    createSadAction,
+    recordingActon,
+    recordedTimeAction,
+    isBlockedAction,
+    blobURLAction,
+    audioFileAction })(formWrapper);

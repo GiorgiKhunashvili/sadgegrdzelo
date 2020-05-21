@@ -202,7 +202,9 @@ const validate = (formValues, props) => {
     if ( !formValues.description ) {
         errors.description = "Please enter description"
     }
-
+    if ( props.recordAudio.file === null ){
+        errors.audioRecorder = "please record some audio"
+    }
     return errors;
 }
 

@@ -1,9 +1,10 @@
-import { LOGIN,
-        LOG_OUT,
-        SUCCESS_SIGN_UP,
-        CREATE_SAD,
-        GET_ALL_SADGEGRDZELO
-     } from './types';
+import {
+    LOGIN,
+    LOG_OUT,
+    SUCCESS_SIGN_UP,
+    CREATE_SAD,
+    GET_ALL_SADGEGRDZELO
+} from './types';
 import axiosInstance from '../axiosApi/api';
 
 import history from '../history';
@@ -14,7 +15,7 @@ export const login = (formValues) => {
     return async (dispatch) => {
         let isSignIn = false;
         try {
-            const response = await axiosInstance.post('/api/token/obtain/', {...formValues});
+            const response = await axiosInstance.post('/api/token/obtain/', { ...formValues });
             axiosInstance.defaults.headers['Authorization'] = "JWT" + response.data.access;
 
             localStorage.setItem('access_token', response.data.access);
@@ -25,9 +26,9 @@ export const login = (formValues) => {
                 payload: isSignIn
             })
             history.push('/')
-    } catch {
+        } catch {
 
-    }
+        }
     }
 }
 
@@ -47,7 +48,7 @@ export const logout = () => {
 
             history.push('/')
             return response
-        }catch(e) {
+        } catch (e) {
             console.log(e)
         }
     }
@@ -66,7 +67,7 @@ export const createSadAction = (audioFile, formValues) => {
             formData.append('audio', audioFile);
             formData.append('title', formValues.title);
             formData.append('description', formValues.description);
-            formData.append('id', 1);
+            formData.append('id', 2);
             await axiosInstance.post('/sad/create/', formData, {
                 headers: {
                     'Authorization': "JWT " + localStorage.getItem('access_token'),
@@ -78,7 +79,7 @@ export const createSadAction = (audioFile, formValues) => {
             })
             history.push("/")
 
-        } catch(e) {
+        } catch (e) {
             console.log(e.response)
         }
     }
@@ -93,8 +94,8 @@ export const getSadgegrdzeloData = () => {
                 type: GET_ALL_SADGEGRDZELO,
                 payload: response.data
             })
-        
-        }catch(e) {
+
+        } catch (e) {
             console.log(e.response);
         }
     }

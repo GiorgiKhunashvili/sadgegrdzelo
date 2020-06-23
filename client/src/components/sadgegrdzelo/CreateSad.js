@@ -5,13 +5,14 @@ import MicRecorder from 'mic-recorder-to-mp3';
 
 
 import { createSadAction } from '../../actions/index';
-import { recordingActon,
-        recordedTimeAction,
-        isBlockedAction,
-        blobURLAction,
-        audioFileAction
+import {
+    recordingActon,
+    recordedTimeAction,
+    isBlockedAction,
+    blobURLAction,
+    audioFileAction
 }
-  from '../../actions/recordAudioActions';
+    from '../../actions/recordAudioActions';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 })
 
@@ -31,24 +32,24 @@ class CreateSad extends React.Component {
 
     }
 
-    renderInput = ({label, input, type, holder, meta}) => {
-        const className = `field ${meta.error && meta.touched ? 'error': ''}`
+    renderInput = ({ label, input, type, holder, meta }) => {
+        const className = `field ${meta.error && meta.touched ? 'error' : ''}`
         let formInput = <input {...input} placeholder={holder} />
-        if(type === "textare"){
+        if (type === "textare") {
             formInput = <textarea />
         }
         return (
             <div className={className}>
-                <label>{ label }</label>
+                <label>{label}</label>
                 {formInput}
                 {this.renderError(meta)}
             </div>
         )
     }
     start = () => {
-        if (this.props.recordAudio.isBlocked){
+        if (this.props.recordAudio.isBlocked) {
             console.log("Permission Denied");
-        }else {
+        } else {
             Mp3Recorder.start().then(() => {
                 console.log("started recording")
             }).catch((e) => console.error(e))
@@ -60,7 +61,7 @@ class CreateSad extends React.Component {
             const file = new File(buffer, 'me-at-thevoice.mp3', {
                 type: blob.type,
                 lastModified: Date.now()
-              });
+            });
             // formData.append("audio", file);
             // formData.append("id", 1);
             // formData.append("title", "aloo");
@@ -81,32 +82,32 @@ class CreateSad extends React.Component {
     }
     onAudioButtonClick = (e, recording) => {
         e.preventDefault();
-        if (recording){
-            this.props.recordingActon(recording=true);
+        if (recording) {
+            this.props.recordingActon(recording = true);
             this.start()
             this.timer = setInterval(() => {
                 this.props.recordedTimeAction(this.props.recordAudio.recordedTime + 1);
             }, 1000)
-        }else {
-            this.props.recordingActon(recording=false);
+        } else {
+            this.props.recordingActon(recording = false);
             clearInterval(this.timer)
             this.stop();
         }
     }
     renderAudioRecorder = ({ label, input, recording, recordedTime, meta }) => {
 
-        if (recording === true){
+        if (recording === true) {
             return (
                 <div>
-                      <button onClick={(e) => this.onAudioButtonClick(e, false) } className="ui button red">
+                    <button onClick={(e) => this.onAudioButtonClick(e, false)} className="ui button red">
                         <i className="pause icon"></i>
-                        { recordedTime }
+                        {recordedTime}
                     </button>
                     {this.renderError(meta)}
 
                 </div>
             )
-        }else {
+        } else {
             return (
                 <div>
                     <button onClick={(e) => this.onAudioButtonClick(e, true)} className="ui button">
@@ -115,14 +116,14 @@ class CreateSad extends React.Component {
                     </button>
                     {this.renderError(meta)}
                 </div>
-    
+
             )
         }
- 
+
     }
 
-    componentDidMount(){
-        navigator.getUserMedia({audio: true},
+    componentDidMount() {
+        navigator.getUserMedia({ audio: true },
             () => {
                 console.log("Permision Granted");
 
@@ -132,10 +133,10 @@ class CreateSad extends React.Component {
                 console.log("Permision denide")
                 this.props.isBlockedAction(true)
             }
-            )
+        )
     }
 
-    renderRecorededAudio(){
+    renderRecorededAudio() {
         if (this.props.recordAudio.blobURL) {
             return (
                 <div>
@@ -167,25 +168,24 @@ class CreateSad extends React.Component {
                         holder="Enter Description"
                         type="textarea"
                     />
-                    <Field 
+                    <Field
                         name="audioRecorder"
                         component={this.renderAudioRecorder}
                         label="Recorder"
                         holder="Click to start recording"
                         recording={this.props.recordAudio.recording}
                         recordedTime={this.props.recordAudio.recordedTime}
-
                     />
                     {/* { this.renderAudioRecorder() } */}
 
-                    <div className="ui buttons" style={{ marginTop:"20px" }}>
+                    <div className="ui buttons" style={{ marginTop: "20px" }}>
                         <button className="ui button">Cancel</button>
                         <div className="or"></div>
                         <button type="submit" className="ui positive button">Save</button>
                     </div>
                 </form>
-                { this.renderRecorededAudio() }
-                
+                {this.renderRecorededAudio()}
+
             </div>
         )
     }
@@ -196,15 +196,15 @@ const validate = (formValues, props) => {
     console.log(props)
 
     const errors = {};
-    if( !formValues.title ){
+    if (!formValues.title) {
         errors.title = "Please enter title"
     };
-    if ( !formValues.description ) {
+    if (!formValues.description) {
         errors.description = "Please enter description"
     }
-    if ( props.recordAudio.file === null ){
-        errors.audioRecorder = "please record some audio"
-    }
+    // if ( props.recordAudio.file === null ){
+    //     errors.audioRecorder = "please record some audio"
+    // }
     return errors;
 }
 
@@ -227,4 +227,5 @@ export default connect(mapStateToProps, {
     recordedTimeAction,
     isBlockedAction,
     blobURLAction,
-    audioFileAction })(formWrapper);
+    audioFileAction
+})(formWrapper);

@@ -12,7 +12,7 @@ import {
     blobURLAction,
     audioFileAction
 }
-    from '../../actions/recordAudioActions';
+from '../../actions/recordAudioActions';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 })
 
@@ -62,17 +62,6 @@ class CreateSad extends React.Component {
                 type: blob.type,
                 lastModified: Date.now()
             });
-            // formData.append("audio", file);
-            // formData.append("id", 1);
-            // formData.append("title", "aloo");
-            // formData.append("description", "aloo123")
-
-            // axios.post('http://localhost:8000/sad/create/', formData, {
-            //     headers: {
-            //     'Authorization': "JWT " + localStorage.getItem('access_token'),
-            //     'Content-Type': 'multipart/form-data'
-            //     }
-            // }).then().catch((e) => console.log(e.response))
             const blobURL = URL.createObjectURL(blob);
             this.props.recordingActon(false);
             this.props.blobURLAction(blobURL);
@@ -123,6 +112,7 @@ class CreateSad extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.props.recordAudio.isBlocked)
         navigator.getUserMedia({ audio: true },
             () => {
                 console.log("Permision Granted");
@@ -151,43 +141,52 @@ class CreateSad extends React.Component {
     }
     render() {
         // console.log(this.props)
-        return (
-            <div>
-                <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-                    <Field
-                        name="title"
-                        component={this.renderInput}
-                        label="Tilte"
-                        holder="Enter Title"
-                        type="text"
-                    />
-                    <Field
-                        name="description"
-                        component={this.renderInput}
-                        label="Description"
-                        holder="Enter Description"
-                        type="textarea"
-                    />
-                    <Field
-                        name="audioRecorder"
-                        component={this.renderAudioRecorder}
-                        label="Recorder"
-                        holder="Click to start recording"
-                        recording={this.props.recordAudio.recording}
-                        recordedTime={this.props.recordAudio.recordedTime}
-                    />
-                    {/* { this.renderAudioRecorder() } */}
+        if (!this.props.recordAudio.isBlocked){
+            return (
+                <div>
+                    <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
+                        <Field
+                            name="title"
+                            component={this.renderInput}
+                            label="Tilte"
+                            holder="Enter Title"
+                            type="text"
+                        />
+                        <Field
+                            name="description"
+                            component={this.renderInput}
+                            label="Description"
+                            holder="Enter Description"
+                            type="textarea"
+                        />
+                        <Field
+                            name="audioRecorder"
+                            component={this.renderAudioRecorder}
+                            label="Recorder"
+                            holder="Click to start recording"
+                            recording={this.props.recordAudio.recording}
+                            recordedTime={this.props.recordAudio.recordedTime}
+                        />
+                        {/* { this.renderAudioRecorder() } */}
+    
+                        <div className="ui buttons" style={{ marginTop: "20px" }}>
+                            <button className="ui button">Cancel</button>
+                            <div className="or"></div>
+                            <button type="submit" className="ui positive button">Save</button>
+                        </div>
+                    </form>
+                    {this.renderRecorededAudio()}
+    
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <h1>Please allow audio recording </h1>
+                </div>
+            )
+        }
 
-                    <div className="ui buttons" style={{ marginTop: "20px" }}>
-                        <button className="ui button">Cancel</button>
-                        <div className="or"></div>
-                        <button type="submit" className="ui positive button">Save</button>
-                    </div>
-                </form>
-                {this.renderRecorededAudio()}
-
-            </div>
-        )
     }
 
 }

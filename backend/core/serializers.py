@@ -8,14 +8,13 @@ class SadgegrdzeloSerializer(serializers.ModelSerializer):
         model = Sadgegrdzelo
         fields = ["id", 'title', "description", "audio"]
 
-    def save(self):
+    def save(self, user):
         try:
-            author = UserAccount.objects.get(id=self.validated_data["id"])
             sadgegrdzelo = Sadgegrdzelo(
                 title=self.validated_data['title'],
                 description=self.validated_data['description'],
                 audio=self.validated_data['audio'],
-                user=author
+                user=user
             )
             sadgegrdzelo.save()
         except UserAccount.DoesNotExist as e:

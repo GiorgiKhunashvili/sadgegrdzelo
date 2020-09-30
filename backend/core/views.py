@@ -10,9 +10,10 @@ from .serializers import SadgegrdzeloSerializer, GetAllSadgegrdzeloSerializer
 
 class CreateSadgegrdzelo(APIView):
     def post(self, request):
+        user = request.user
         serializer = SadgegrdzeloSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=user)
             return Response({"message": "sadgegrdzelo created" }, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
